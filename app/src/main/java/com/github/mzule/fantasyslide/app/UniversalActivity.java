@@ -3,10 +3,13 @@ package com.github.mzule.fantasyslide.app;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Objects;
 
 import me.imid.swipebacklayout.lib.SwipeBackLayout;
 import me.imid.swipebacklayout.lib.Utils;
@@ -32,7 +35,7 @@ public class UniversalActivity extends AppCompatActivity implements SwipeBackAct
         super.onCreate(savedInstanceState);
         swipeBackActivityHelper = new SwipeBackActivityHelper(this);
         swipeBackActivityHelper.onActivityCreate();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         setTitle(getIntent().getStringExtra("title"));
     }

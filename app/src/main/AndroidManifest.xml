@@ -20,6 +20,9 @@
         <activity
             android:name="com.github.mzule.fantasyslide.app.UniversalActivity"
             android:theme="@style/UniversalTheme" />
+        <activity
+            android:name=".Activity2"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

@@ -1,10 +1,12 @@
 package com.github.mzule.fantasyslide;
 
 import android.content.Context;
-import android.support.v4.widget.DrawerLayout;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +44,7 @@ public class FantasyDrawerLayout extends DrawerLayout implements DrawerLayout.Dr
         addDrawerListener(this);
     }
 
-    public void openDrawer(View drawerView) {
+    public void openDrawer(@NonNull View drawerView) {
         super.openDrawer(drawerView);
         currentSideBar = (SideBarWithBg) drawerView;
     }
@@ -136,11 +138,11 @@ public class FantasyDrawerLayout extends DrawerLayout implements DrawerLayout.Dr
     }
 
     @Override
-    public void onDrawerOpened(View drawerView) {
+    public void onDrawerOpened(@NonNull View drawerView) {
     }
 
     @Override
-    public void onDrawerClosed(View drawerView) {
+    public void onDrawerClosed(@NonNull View drawerView) {
     }
 
     @Override

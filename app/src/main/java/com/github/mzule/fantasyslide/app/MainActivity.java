@@ -1,37 +1,48 @@
 package com.github.mzule.fantasyslide.app;
 
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.graphics.drawable.DrawerArrowDrawable;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.graphics.drawable.DrawerArrowDrawable;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.github.mzule.fantasyslide.SideBar;
 import com.github.mzule.fantasyslide.SimpleFantasyListener;
 import com.github.mzule.fantasyslide.Transformer;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "HEY";
     private DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        TextView tv = (TextView) findViewById(R.id.Text123);
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "onClick: " + view.getId());
+            }
+        });
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         final DrawerArrowDrawable indicator = new DrawerArrowDrawable(this);
         indicator.setColor(Color.WHITE);
         getSupportActionBar().setHomeAsUpIndicator(indicator);
 
-        setTransformer();
-        // setListener();
+        setListener();
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         drawerLayout.setScrimColor(Color.TRANSPARENT);
         drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
@@ -45,33 +56,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setListener() {
-        final TextView tipView = (TextView) findViewById(R.id.tipView);
         SideBar leftSideBar = (SideBar) findViewById(R.id.leftSideBar);
         leftSideBar.setFantasyListener(new SimpleFantasyListener() {
             @Override
             public boolean onHover(@Nullable View view, int index) {
-                tipView.setVisibility(View.VISIBLE);
-                if (view instanceof TextView) {
-                    tipView.setText(String.format("%s at %d", ((TextView) view).getText().toString(), index));
-                } else if (view != null && view.getId() == R.id.userInfo) {
-                    tipView.setText(String.format("个人中心 at %d", index));
-                } else {
-                    tipView.setText(null);
-                }
+                if (view == null)
+                    return false;
+                Log.d(TAG, "onHover: " + view.getId());
                 return false;
-
             }
 
             @Override
             public boolean onSelect(View view, int index) {
-                tipView.setVisibility(View.INVISIBLE);
-                Toast.makeText(MainActivity.this, String.format("%d selected", index), Toast.LENGTH_SHORT).show();
-                return false;
+
+
+                switch (view.getId()) {
+                    case R.id.Text123:
+                        Intent intent = new Intent(view.getContext(), Activity2.class);
+                        startActivity(intent);
+                        break;
+                    default:
+                        break;
+                }
+                return true;
             }
 
             @Override
             public void onCancel() {
-                tipView.setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -121,16 +132,20 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public void onClick(View view) {
-        if (view instanceof TextView) {
-            String title = ((TextView) view).getText().toString();
-            if (title.startsWith("星期")) {
-                Toast.makeText(this, title, Toast.LENGTH_SHORT).show();
-            } else {
-                startActivity(UniversalActivity.newIntent(this, title));
-            }
-        } else if (view.getId() == R.id.userInfo) {
-            startActivity(UniversalActivity.newIntent(this, "个人中心"));
-        }
-    }
+//    public void function(View v) {
+//        Log.d(TAG, "fun: Function");
+//    }
+
+//    public void onClick(View view) {
+//        if (view instanceof TextView) {
+//            String title = ((TextView) view).getText().toString();
+//            if (title.startsWith("星期")) {
+//                Toast.makeText(this, title, Toast.LENGTH_SHORT).show();
+//            } else {
+//                startActivity(UniversalActivity.newIntent(this, title));
+//            }
+//        } else if (view.getId() == R.id.userInfo) {
+//            startActivity(UniversalActivity.newIntent(this, "个人中心"));
+//        }
+//    }
 }

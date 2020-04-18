@@ -111,6 +111,7 @@ public class FantasyDrawerLayout extends DrawerLayout implements DrawerLayout.Dr
             }
         }
         if (ev.getAction() == MotionEvent.ACTION_UP) {
+            currentSideBar.setTouchY(y, slideOffset);
             closeDrawers();
             currentSideBar.onMotionEventUp();
             return super.dispatchTouchEvent(ev);
